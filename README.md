@@ -37,17 +37,15 @@
 ### Installation
 
 ```bash
-# 1. Clone the repo
+# 1. Back up existing ~/.dotfiles directory (if present — otherwise skipped automatically)
+[ -d ~/.dotfiles ] && mv ~/.dotfiles ~/.dotfiles.backup && echo "Backed up ~/.dotfiles → ~/.dotfiles.backup"
+
+# 2. Clone the repo
 git clone https://github.com/marcdon2002/dotfiles.git ~/.dotfiles
 
-# 2. Navigate into the repo
-cd ~/.dotfiles
-
-# 3. Run the install script (automatically backs up your existing configs first)
-./install.sh
+# 3. Run the install script (backs up your existing config files automatically)
+cd ~/.dotfiles && ./install.sh
 ```
-
-> **Note:** If `~/.dotfiles` already exists, back it up first: `mv ~/.dotfiles ~/.dotfiles.old`
 
 ### What the Install Script Does
 
@@ -66,13 +64,14 @@ The script is fully **idempotent** — you can run it multiple times without bre
 
 The **very first thing** the install script does is back up your existing config files — before anything gets installed or overwritten:
 
-| Your file | Backed up to |
-|-----------|-------------|
-| `~/.zshrc` | `~/.zshrc.backup` |
-| `~/.tmux.conf` | `~/.tmux.conf.backup` |
-| `~/.config/omp/1_shell.omp.json` | `~/.config/omp/1_shell.omp.json.backup` |
+| What | Backed up to | When |
+|------|-------------|------|
+| `~/.dotfiles/` (directory) | `~/.dotfiles.backup/` | Before cloning (installation step 1) |
+| `~/.zshrc` | `~/.zshrc.backup` | By install.sh |
+| `~/.tmux.conf` | `~/.tmux.conf.backup` | By install.sh |
+| `~/.config/omp/1_shell.omp.json` | `~/.config/omp/1_shell.omp.json.backup` | By install.sh |
 
-This works for both **regular files** and **symlinks** (e.g. from another dotfiles manager) — the actual file content is always preserved in the `.backup` file.
+This works for both **regular files** and **symlinks** (e.g. from another dotfiles manager) — the actual file content is always preserved in the `.backup` file. If a file doesn't exist, it's skipped and no backup is created.
 
 To restore your original config at any time, see [Uninstall](#uninstall).
 
@@ -120,22 +119,25 @@ This setup uses the [Catppuccin Mocha](https://catppuccin.com/) palette across a
 
 ## Uninstall
 
-Remove the symlinks and restore your original config:
+Remove the symlinks and restore everything to its previous state:
 
 ```bash
 # 1. Remove symlinks
-cd ~/.dotfiles
-stow -D zsh tmux omp
+cd ~ && stow -D -d .dotfiles zsh tmux omp
 
-# 2. Restore your backed-up config files (if they exist)
-mv ~/.zshrc.backup ~/.zshrc
-mv ~/.tmux.conf.backup ~/.tmux.conf
-mv ~/.config/omp/1_shell.omp.json.backup ~/.config/omp/1_shell.omp.json
+# 2. Restore config file backups (ignore errors — they just mean no backup was created)
+mv ~/.zshrc.backup ~/.zshrc 2>/dev/null
+mv ~/.tmux.conf.backup ~/.tmux.conf 2>/dev/null
+mv ~/.config/omp/1_shell.omp.json.backup ~/.config/omp/1_shell.omp.json 2>/dev/null
+
+# 3. Remove the cloned repo
+rm -rf ~/.dotfiles
+
+# 4. Restore your old ~/.dotfiles directory (if it was backed up during installation)
+[ -d ~/.dotfiles.backup ] && mv ~/.dotfiles.backup ~/.dotfiles && echo "Restored ~/.dotfiles.backup → ~/.dotfiles"
 ```
 
-> **Note:** The `mv` commands in step 2 will only work if the install script created a backup for that file. If you get a "No such file or directory" error, it simply means that file didn't exist before the installation — you can safely ignore it.
-
-If you also want to remove the repo itself: `rm -rf ~/.dotfiles`
+> **Note:** Steps 2 and 4 only restore files/directories that were actually backed up during installation. If nothing was backed up (e.g. fresh Mac), those steps are simply skipped.
 
 ## Credits
 
