@@ -51,10 +51,10 @@ cd ~/.dotfiles
 
 The script is fully **idempotent** — you can run it multiple times without breaking anything. Already installed tools are detected and skipped.
 
-1. Install Xcode Command Line Tools (if needed)
-2. Install [Homebrew](https://brew.sh/) (if needed)
-3. Install all packages from the Brewfile
-4. **Backup** existing config files (see below)
+1. **Backup** existing config files (see below)
+2. Install Xcode Command Line Tools (if needed)
+3. Install [Homebrew](https://brew.sh/) (if needed)
+4. Install all packages from the Brewfile
 5. Install Oh My Zsh + fzf-tab plugin
 6. Symlink all config files with GNU Stow
 7. Install Catppuccin tmux theme + TPM plugins
@@ -62,7 +62,7 @@ The script is fully **idempotent** — you can run it multiple times without bre
 
 ### Your Existing Config is Safe
 
-The install script automatically **backs up** your existing config files before replacing them:
+The **very first thing** the install script does is back up your existing config files — before anything gets installed or overwritten:
 
 | Your file | Backed up to |
 |-----------|-------------|
