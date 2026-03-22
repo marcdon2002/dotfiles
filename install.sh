@@ -45,6 +45,7 @@ brew bundle --verbose --file="$DOTFILES/Brewfile"
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   echo "Installing Oh My Zsh..."
   KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  rm -f "$HOME/.zshrc"
 fi
 
 # 6. fzf-tab plugin
