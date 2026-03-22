@@ -45,7 +45,7 @@
 ### Installation
 
 ```bash
-git clone https://github.com/marcdonauer/dotfiles.git ~/.dotfiles
+git clone https://github.com/marcdon2002/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ./install.sh
 ```
