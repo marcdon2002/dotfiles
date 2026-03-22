@@ -2,33 +2,25 @@
 
 > My macOS terminal setup — Catppuccin Mocha themed, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-![macOS](https://img.shields.io/badge/macOS-000000?style=flat&logo=apple&logoColor=white)
-![Catppuccin Mocha](https://img.shields.io/badge/Catppuccin-Mocha-cba6f7?style=flat&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMiIgZmlsbD0iI2NiYTZmNyIvPjwvc3ZnPg==)
-![Zsh](https://img.shields.io/badge/Zsh-F15A24?style=flat&logo=gnu-bash&logoColor=white)
-![tmux](https://img.shields.io/badge/tmux-1BB91F?style=flat&logo=tmux&logoColor=white)
+[![macOS](https://img.shields.io/badge/macOS-000000?style=flat&logo=apple&logoColor=white)](https://www.apple.com/macos/)
+[![Catppuccin Mocha](https://img.shields.io/badge/Catppuccin-Mocha-cba6f7?style=flat)](https://catppuccin.com/)
+[![Zsh](https://img.shields.io/badge/Zsh-F15A24?style=flat&logo=gnu-bash&logoColor=white)](https://ohmyz.sh/)
+[![tmux](https://img.shields.io/badge/tmux-1BB91F?style=flat&logo=tmux&logoColor=white)](https://github.com/tmux/tmux)
 
 ## What's Included
 
 | Tool | Description |
 |------|-------------|
-| **Zsh** | Oh My Zsh + [Oh My Posh](https://ohmyposh.dev/) prompt with Catppuccin Mocha colors |
-| **tmux** | [Catppuccin tmux](https://github.com/catppuccin/tmux) theme (v2) + better mouse mode + agent indicator |
-| **Oh My Posh** | Custom [1_shell](https://ohmyposh.dev/docs/themes) theme adapted to Catppuccin Mocha palette |
-| **Terminal.app** | macOS Terminal profile with Catppuccin Mocha colors + MesloLGS Nerd Font |
-| **eza** | Modern `ls` replacement with icons and colors |
-| **fzf-tab** | Fuzzy tab completion with eza preview |
-| **fast-syntax-highlighting** | Improved syntax highlighting for Zsh |
+| [**Oh My Zsh**](https://ohmyz.sh/) | Zsh framework with plugins (git, z, history-substring-search) |
+| [**Oh My Posh**](https://ohmyposh.dev/) | Custom prompt theme using the Catppuccin Mocha palette |
+| [**tmux**](https://github.com/tmux/tmux) | Terminal multiplexer with [Catppuccin](https://github.com/catppuccin/tmux) theme (v2.1.3) |
+| [**eza**](https://github.com/eza-community/eza) | Modern `ls` replacement with icons and colors |
+| [**fzf**](https://github.com/junegunn/fzf) | Fuzzy finder + [fzf-tab](https://github.com/Aloxaf/fzf-tab) for tab completion with preview |
+| [**fast-syntax-highlighting**](https://github.com/zdharma-continuum/fast-syntax-highlighting) | Syntax highlighting for Zsh |
+| [**zsh-autosuggestions**](https://github.com/zsh-users/zsh-autosuggestions) | Fish-like command suggestions |
+| **Terminal.app** | Catppuccin Mocha profile with [MesloLGS Nerd Font](https://github.com/romkatv/nerd-fonts) |
 
-## Zsh Plugins
-
-- [Oh My Zsh](https://ohmyz.sh/) — Plugin framework
-- [Oh My Posh](https://ohmyposh.dev/) — Prompt theme engine
-- [fzf-tab](https://github.com/Aloxaf/fzf-tab) — Fuzzy tab completion with preview
-- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) — Fish-like autosuggestions
-- [fast-syntax-highlighting](https://github.com/zdharma-continuum/fast-syntax-highlighting) — Syntax highlighting
-- [eza](https://github.com/eza-community/eza) — Modern ls with icons
-
-## tmux Plugins
+### tmux Plugins
 
 - [TPM](https://github.com/tmux-plugins/tpm) — Plugin manager
 - [Catppuccin tmux](https://github.com/catppuccin/tmux) — Theme (manually installed, v2.1.3)
@@ -63,7 +55,7 @@ The install script will:
 
 ### Already Have a Setup?
 
-No worries — the install script **backs up** existing config files before overwriting:
+No worries — the install script **backs up** your existing config files before replacing them:
 
 | File | Backup |
 |------|--------|
@@ -71,17 +63,9 @@ No worries — the install script **backs up** existing config files before over
 | `~/.tmux.conf` | `~/.tmux.conf.backup` |
 | `~/.config/omp/1_shell.omp.json` | `~/.config/omp/1_shell.omp.json.backup` |
 
-If you already have Homebrew installed, the script will skip the Homebrew installation and only install missing packages. Existing tools like Oh My Zsh, TPM, and fzf-tab are also skipped if already present.
+Already installed tools (Homebrew, Oh My Zsh, TPM, fzf-tab) are detected and skipped — only missing components get installed.
 
-To restore your old config, simply remove the symlinks and rename the backups:
-
-```bash
-cd ~/.dotfiles && stow -D zsh tmux omp
-mv ~/.zshrc.backup ~/.zshrc
-mv ~/.tmux.conf.backup ~/.tmux.conf
-```
-
-### Manual Steps After Install
+### After Install
 
 1. Open **Terminal.app → Settings → Profiles**
 2. Set **Catppuccin Mocha** as default profile
@@ -96,17 +80,17 @@ mv ~/.tmux.conf.backup ~/.tmux.conf
 ├── install.sh                       # Bootstrap script
 ├── README.md
 ├── zsh/
-│   └── .zshrc                       # → ~/.zshrc
+│   └── .zshrc                       → ~/.zshrc
 ├── tmux/
-│   └── .tmux.conf                   # → ~/.tmux.conf
+│   └── .tmux.conf                   → ~/.tmux.conf
 ├── omp/
 │   └── .config/omp/
-│       └── 1_shell.omp.json         # → ~/.config/omp/1_shell.omp.json
+│       └── 1_shell.omp.json         → ~/.config/omp/1_shell.omp.json
 └── terminal/
-    └── Catppuccin-Mocha.terminal    # Terminal.app profile
+    └── Catppuccin-Mocha.terminal    # Terminal.app profile (imported via open)
 ```
 
-All config files are symlinked to their correct locations using GNU Stow. Editing `~/.zshrc` automatically edits the file inside `~/.dotfiles/` — no manual copying needed.
+All config files are symlinked to their correct locations using [GNU Stow](https://www.gnu.org/software/stow/). Editing `~/.zshrc` automatically edits the file inside `~/.dotfiles/` — no manual copying needed.
 
 ## Updating
 
@@ -114,16 +98,13 @@ After making changes to your config:
 
 ```bash
 cd ~/.dotfiles
-git add -A
-git commit -m "update config"
-git push
+git add -A && git commit -m "update config" && git push
 ```
 
 On another Mac, pull the latest changes:
 
 ```bash
-cd ~/.dotfiles
-git pull
+cd ~/.dotfiles && git pull
 ```
 
 ## Catppuccin Mocha Colors
@@ -143,11 +124,14 @@ This setup uses the [Catppuccin Mocha](https://catppuccin.com/) palette across a
 
 ## Uninstall
 
-To remove the symlinks without deleting the repo:
+Remove the symlinks and restore your original config:
 
 ```bash
 cd ~/.dotfiles
 stow -D zsh tmux omp
+mv ~/.zshrc.backup ~/.zshrc
+mv ~/.tmux.conf.backup ~/.tmux.conf
+mv ~/.config/omp/1_shell.omp.json.backup ~/.config/omp/1_shell.omp.json
 ```
 
 ## Credits
