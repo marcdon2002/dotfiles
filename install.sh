@@ -39,7 +39,7 @@ fi
 
 # 4. Brew packages
 echo "Installing brew packages..."
-brew bundle --file="$DOTFILES/Brewfile"
+brew bundle --verbose --file="$DOTFILES/Brewfile"
 
 # 5. Oh My Zsh (KEEP_ZSHRC=yes prevents overwriting our stowed .zshrc)
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
