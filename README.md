@@ -37,15 +37,17 @@
 ### Installation
 
 ```bash
-# 1. Clone the repo (if ~/.dotfiles exists, back it up first: mv ~/.dotfiles ~/.dotfiles.old)
+# 1. Clone the repo
 git clone https://github.com/marcdon2002/dotfiles.git ~/.dotfiles
 
 # 2. Navigate into the repo
 cd ~/.dotfiles
 
-# 3. Run the install script
+# 3. Run the install script (automatically backs up your existing configs first)
 ./install.sh
 ```
+
+> **Note:** If `~/.dotfiles` already exists, back it up first: `mv ~/.dotfiles ~/.dotfiles.old`
 
 ### What the Install Script Does
 

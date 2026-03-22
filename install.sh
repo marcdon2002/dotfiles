@@ -12,7 +12,7 @@ for f in "$HOME/.zshrc" "$HOME/.tmux.conf" "$HOME/.config/omp/1_shell.omp.json";
     cp -L "$f" "$f.backup" && echo "  Backed up (symlink target): $f"
     rm "$f"
   elif [ -f "$f" ]; then
-    cp "$f" "$f.backup" && echo "  Backed up: $f"
+    mv "$f" "$f.backup" && echo "  Backed up: $f"
   fi
 done
 
