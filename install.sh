@@ -13,6 +13,8 @@ for f in "$HOME/.zshrc" "$HOME/.tmux.conf" "$HOME/.config/omp/1_shell.omp.json";
     rm "$f"
   elif [ -f "$f" ]; then
     mv "$f" "$f.backup" && echo "  Backed up: $f"
+  else
+    echo "  No existing file found: $f (nothing to back up)"
   fi
 done
 

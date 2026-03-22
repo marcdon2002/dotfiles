@@ -127,11 +127,13 @@ Remove the symlinks and restore your original config:
 cd ~/.dotfiles
 stow -D zsh tmux omp
 
-# 2. Restore your backed-up config files
+# 2. Restore your backed-up config files (if they exist)
 mv ~/.zshrc.backup ~/.zshrc
 mv ~/.tmux.conf.backup ~/.tmux.conf
 mv ~/.config/omp/1_shell.omp.json.backup ~/.config/omp/1_shell.omp.json
 ```
+
+> **Note:** The `mv` commands in step 2 will only work if the install script created a backup for that file. If you get a "No such file or directory" error, it simply means that file didn't exist before the installation — you can safely ignore it.
 
 If you also want to remove the repo itself: `rm -rf ~/.dotfiles`
 
