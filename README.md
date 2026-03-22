@@ -37,41 +37,41 @@
 ### Installation
 
 ```bash
-# 1. Back up existing ~/.dotfiles directory (if present — otherwise skipped automatically)
+# 1. Back up existing ~/.dotfiles directory (skipped automatically if not present)
 [ -d ~/.dotfiles ] && mv ~/.dotfiles ~/.dotfiles.backup && echo "Backed up ~/.dotfiles → ~/.dotfiles.backup"
 
 # 2. Clone the repo
 git clone https://github.com/marcdon2002/dotfiles.git ~/.dotfiles
 
-# 3. Run the install script (backs up your existing config files automatically)
+# 3. Run the install script (backs up existing config files automatically)
 cd ~/.dotfiles && ./install.sh
 ```
 
 ### What the Install Script Does
 
-The script is fully **idempotent** — you can run it multiple times without breaking anything. Already installed tools are detected and skipped.
+The script is fully **idempotent** — safe to run multiple times. Already installed tools are detected and skipped.
 
-1. **Backup** existing config files (see below)
+1. **Back up** existing config files (see below)
 2. Install Xcode Command Line Tools (if needed)
 3. Install [Homebrew](https://brew.sh/) (if needed)
 4. Install all packages from the Brewfile
 5. Install Oh My Zsh + fzf-tab plugin
-6. Symlink all config files with GNU Stow
+6. Symlink all config files via GNU Stow
 7. Install Catppuccin tmux theme + TPM plugins
 8. Import the Terminal.app profile
 
 ### Your Existing Config is Safe
 
-The **very first thing** the install script does is back up your existing config files — before anything gets installed or overwritten:
+The very first thing the install script does is **back up** your existing config files — before anything gets installed or overwritten:
 
 | What | Backed up to | When |
 |------|-------------|------|
-| `~/.dotfiles/` (directory) | `~/.dotfiles.backup/` | Before cloning (installation step 1) |
-| `~/.zshrc` | `~/.zshrc.backup` | By install.sh |
-| `~/.tmux.conf` | `~/.tmux.conf.backup` | By install.sh |
-| `~/.config/omp/1_shell.omp.json` | `~/.config/omp/1_shell.omp.json.backup` | By install.sh |
+| `~/.dotfiles/` | `~/.dotfiles.backup/` | Before cloning (installation step 1) |
+| `~/.zshrc` | `~/.zshrc.backup` | By install.sh (step 1) |
+| `~/.tmux.conf` | `~/.tmux.conf.backup` | By install.sh (step 1) |
+| `~/.config/omp/1_shell.omp.json` | `~/.config/omp/1_shell.omp.json.backup` | By install.sh (step 1) |
 
-This works for both **regular files** and **symlinks** (e.g. from another dotfiles manager) — the actual file content is always preserved in the `.backup` file. If a file doesn't exist, it's skipped and no backup is created.
+This works for both **regular files** and **symlinks** (e.g. from another dotfiles manager) — the actual file content is always preserved in the `.backup` file. Files that don't exist are skipped.
 
 To restore your original config at any time, see [Uninstall](#uninstall).
 
@@ -88,7 +88,6 @@ To restore your original config at any time, see [Uninstall](#uninstall).
 ~/.dotfiles/
 ├── Brewfile                         # Homebrew packages
 ├── install.sh                       # Bootstrap script
-├── README.md
 ├── zsh/
 │   └── .zshrc                       → ~/.zshrc
 ├── tmux/
@@ -125,7 +124,7 @@ Remove the symlinks and restore everything to its previous state:
 # 1. Remove symlinks
 cd ~ && stow -D -d .dotfiles zsh tmux omp
 
-# 2. Restore config file backups (ignore errors — they just mean no backup was created)
+# 2. Restore config file backups
 mv ~/.zshrc.backup ~/.zshrc 2>/dev/null
 mv ~/.tmux.conf.backup ~/.tmux.conf 2>/dev/null
 mv ~/.config/omp/1_shell.omp.json.backup ~/.config/omp/1_shell.omp.json 2>/dev/null
@@ -133,11 +132,11 @@ mv ~/.config/omp/1_shell.omp.json.backup ~/.config/omp/1_shell.omp.json 2>/dev/n
 # 3. Remove the cloned repo
 rm -rf ~/.dotfiles
 
-# 4. Restore your old ~/.dotfiles directory (if it was backed up during installation)
+# 4. Restore your previous ~/.dotfiles directory (if it was backed up during installation)
 [ -d ~/.dotfiles.backup ] && mv ~/.dotfiles.backup ~/.dotfiles && echo "Restored ~/.dotfiles.backup → ~/.dotfiles"
 ```
 
-> **Note:** Steps 2 and 4 only restore files/directories that were actually backed up during installation. If nothing was backed up (e.g. fresh Mac), those steps are simply skipped.
+> **Note:** Steps 2 and 4 only restore files that were actually backed up during installation. If no backup exists (e.g. on a fresh Mac), those steps are simply skipped — `2>/dev/null` suppresses any errors.
 
 ## Credits
 
