@@ -37,35 +37,42 @@
 ### Installation
 
 ```bash
+# 1. Clone the repo (if ~/.dotfiles exists, back it up first: mv ~/.dotfiles ~/.dotfiles.old)
 git clone https://github.com/marcdon2002/dotfiles.git ~/.dotfiles
+
+# 2. Navigate into the repo
 cd ~/.dotfiles
+
+# 3. Run the install script
 ./install.sh
 ```
 
-> **Note:** If `~/.dotfiles` already exists, back it up first: `mv ~/.dotfiles ~/.dotfiles.old`
+### What the Install Script Does
 
-The install script will:
+The script is fully **idempotent** — you can run it multiple times without breaking anything. Already installed tools are detected and skipped.
 
 1. Install Xcode Command Line Tools (if needed)
 2. Install [Homebrew](https://brew.sh/) (if needed)
 3. Install all packages from the Brewfile
-4. Install Oh My Zsh + fzf-tab plugin
-5. Symlink all config files with GNU Stow
-6. Install Catppuccin tmux theme
-7. Install TPM and tmux plugins
+4. **Backup** existing config files (see below)
+5. Install Oh My Zsh + fzf-tab plugin
+6. Symlink all config files with GNU Stow
+7. Install Catppuccin tmux theme + TPM plugins
 8. Import the Terminal.app profile
 
-### Already Have a Setup?
+### Your Existing Config is Safe
 
-No worries — the install script **backs up** your existing config files before replacing them:
+The install script automatically **backs up** your existing config files before replacing them:
 
-| File | Backup |
-|------|--------|
+| Your file | Backed up to |
+|-----------|-------------|
 | `~/.zshrc` | `~/.zshrc.backup` |
 | `~/.tmux.conf` | `~/.tmux.conf.backup` |
 | `~/.config/omp/1_shell.omp.json` | `~/.config/omp/1_shell.omp.json.backup` |
 
-Already installed tools (Homebrew, Oh My Zsh, TPM, fzf-tab) are detected and skipped — only missing components get installed.
+This works for both **regular files** and **symlinks** (e.g. from another dotfiles manager) — the actual file content is always preserved in the `.backup` file.
+
+To restore your original config at any time, see [Uninstall](#uninstall).
 
 ### After Install
 
@@ -129,12 +136,17 @@ This setup uses the [Catppuccin Mocha](https://catppuccin.com/) palette across a
 Remove the symlinks and restore your original config:
 
 ```bash
+# 1. Remove symlinks
 cd ~/.dotfiles
 stow -D zsh tmux omp
+
+# 2. Restore your backed-up config files
 mv ~/.zshrc.backup ~/.zshrc
 mv ~/.tmux.conf.backup ~/.tmux.conf
 mv ~/.config/omp/1_shell.omp.json.backup ~/.config/omp/1_shell.omp.json
 ```
+
+If you also want to remove the repo itself: `rm -rf ~/.dotfiles`
 
 ## Credits
 
