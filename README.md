@@ -42,6 +42,8 @@ cd ~/.dotfiles
 ./install.sh
 ```
 
+> **Note:** If `~/.dotfiles` already exists, back it up first: `mv ~/.dotfiles ~/.dotfiles.old`
+
 The install script will:
 
 1. Install Xcode Command Line Tools (if needed)

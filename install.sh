@@ -28,11 +28,15 @@ fi
 echo "Installing brew packages..."
 brew bundle --file="$DOTFILES/Brewfile"
 
-# 4. Backup existing config files before anything overwrites them
+# 4. Backup existing config files (regular files → .backup, old symlinks → remove)
 echo "Backing up existing config files..."
-[ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ] && mv "$HOME/.zshrc" "$HOME/.zshrc.backup"
-[ -f "$HOME/.tmux.conf" ] && [ ! -L "$HOME/.tmux.conf" ] && mv "$HOME/.tmux.conf" "$HOME/.tmux.conf.backup"
-[ -f "$HOME/.config/omp/1_shell.omp.json" ] && [ ! -L "$HOME/.config/omp/1_shell.omp.json" ] && mv "$HOME/.config/omp/1_shell.omp.json" "$HOME/.config/omp/1_shell.omp.json.backup"
+for f in "$HOME/.zshrc" "$HOME/.tmux.conf" "$HOME/.config/omp/1_shell.omp.json"; do
+  if [ -L "$f" ]; then
+    rm "$f"
+  elif [ -f "$f" ]; then
+    mv "$f" "$f.backup"
+  fi
+done
 
 # 5. Oh My Zsh (KEEP_ZSHRC=yes prevents overwriting our stowed .zshrc)
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
@@ -51,7 +55,7 @@ fi
 echo "Linking dotfiles with stow..."
 mkdir -p "$HOME/.config/omp"
 for pkg in zsh tmux omp; do
-  stow -d "$DOTFILES" -t "$HOME" "$pkg"
+  stow --restow -d "$DOTFILES" -t "$HOME" "$pkg"
 done
 
 # 8. Catppuccin for tmux (manual install)
