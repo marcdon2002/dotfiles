@@ -28,10 +28,11 @@ fi
 echo "Installing brew packages..."
 brew bundle --file="$DOTFILES/Brewfile"
 
-# 4. Backup existing config files (regular files → .backup, old symlinks → remove)
+# 4. Backup existing config files (regular files and symlink targets → .backup)
 echo "Backing up existing config files..."
 for f in "$HOME/.zshrc" "$HOME/.tmux.conf" "$HOME/.config/omp/1_shell.omp.json"; do
   if [ -L "$f" ]; then
+    cp -L "$f" "$f.backup"
     rm "$f"
   elif [ -f "$f" ]; then
     mv "$f" "$f.backup"
