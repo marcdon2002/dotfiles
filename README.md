@@ -99,22 +99,7 @@ To restore your original config at any time, see [Uninstall](#uninstall).
     └── Catppuccin-Mocha.terminal    # Terminal.app profile (imported via open)
 ```
 
-All config files are symlinked to their correct locations using [GNU Stow](https://www.gnu.org/software/stow/). Editing `~/.zshrc` automatically edits the file inside `~/.dotfiles/` — no manual copying needed.
-
-## Updating
-
-After making changes to your config:
-
-```bash
-cd ~/.dotfiles
-git add -A && git commit -m "update config" && git push
-```
-
-On another Mac, pull the latest changes:
-
-```bash
-cd ~/.dotfiles && git pull
-```
+All config files are symlinked to their correct locations using [GNU Stow](https://www.gnu.org/software/stow/).
 
 ## Catppuccin Mocha Colors
 
