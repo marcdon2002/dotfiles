@@ -5,15 +5,26 @@ DOTFILES="$HOME/.dotfiles"
 
 echo "=== Dotfiles Setup ==="
 
-# 1. Xcode Command Line Tools
-if ! xcode-select -p &>/dev/null; then
+# 1. Backup existing config files (before anything gets installed or overwritten)
+echo "Backing up existing config files..."
+for f in "$HOME/.zshrc" "$HOME/.tmux.conf" "$HOME/.config/omp/1_shell.omp.json"; do
+  if [ -L "$f" ]; then
+    cp -L "$f" "$f.backup" && echo "  Backed up (symlink target): $f"
+    rm "$f"
+  elif [ -f "$f" ]; then
+    cp "$f" "$f.backup" && echo "  Backed up: $f"
+  fi
+done
+
+# 2. Xcode Command Line Tools
+if ! xcode-select -p &> /dev/null; then
   echo "Installing Xcode Command Line Tools..."
   xcode-select --install
   echo "Press any key after the installation is complete..."
   read -n 1 -s
 fi
 
-# 2. Homebrew
+# 3. Homebrew
 if ! command -v brew &>/dev/null; then
   echo "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -24,20 +35,9 @@ elif [ -f /usr/local/bin/brew ]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-# 3. Brew packages
+# 4. Brew packages
 echo "Installing brew packages..."
 brew bundle --file="$DOTFILES/Brewfile"
-
-# 4. Backup existing config files (regular files and symlink targets → .backup)
-echo "Backing up existing config files..."
-for f in "$HOME/.zshrc" "$HOME/.tmux.conf" "$HOME/.config/omp/1_shell.omp.json"; do
-  if [ -L "$f" ]; then
-    cp -L "$f" "$f.backup"
-    rm "$f"
-  elif [ -f "$f" ]; then
-    mv "$f" "$f.backup"
-  fi
-done
 
 # 5. Oh My Zsh (KEEP_ZSHRC=yes prevents overwriting our stowed .zshrc)
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
